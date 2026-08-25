@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-ivory: #FAF9F6;
+  --color-brand-nude: #E6DFD7;
+  --color-brand-champagne: #D4C5B9;
+  --color-brand-brown: #3E2723;
+  --color-brand-blush: #E8D5D4;
+  --color-brand-dark: #1A1A1A;
+
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+
+  html,
+  body {
+    @apply bg-brand-ivory text-brand-brown font-sans antialiased overflow-x-hidden;
+  }
+
+  :target {
+    scroll-margin-top: 88px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-light;
+  }
+}
+
+@layer utilities {
+  .clip-path-reveal {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+    transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .clip-path-revealed {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
