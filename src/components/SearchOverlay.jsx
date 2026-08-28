@@ -102,7 +102,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                         <h3 className="uppercase tracking-[0.2em] text-[10px] font-semibold mb-6 text-brand-brown/50">Curated For You</h3>
                                         <div className="grid grid-cols-2 gap-4">
                                             {products.filter(p => p.bestseller).slice(0, 2).map(product => (
-                                                <Link key={product.id} to="/#shop" onClick={onClose} className="group cursor-pointer block">
+                                                <Link key={product.id} to={`/product/${product.id}`} onClick={onClose} className="group cursor-pointer block">
                                                     <div className="aspect-[4/5] bg-[#E8D5D4]/20 mb-3 overflow-hidden rounded-sm relative">
                                                         <img src={product.images[0]} onError={handleImageError} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-[1s]" />
                                                     </div>
@@ -131,7 +131,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                                     {filteredProducts.length > 0 ? (
                                         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-8 gap-y-12">
                                             {filteredProducts.map(product => (
-                                                <Link key={product.id} to="/#shop" onClick={onClose} className="group cursor-pointer block flex-col items-center">
+                                                <Link key={product.id} to={`/product/${product.id}`} onClick={onClose} className="group cursor-pointer block flex-col items-center">
                                                     <div className="aspect-[4/5] bg-[#E8D5D4]/20 mb-4 overflow-hidden rounded-sm relative w-full">
                                                         <img src={product.images[0]} onError={handleImageError} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[1.5s]" />
                                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />

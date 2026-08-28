@@ -2,7 +2,7 @@
 import { useLocation } from 'react-router-dom';
 
 export default function ScrollToTop() {
-  const { pathname, search, hash } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useLayoutEffect(() => {
     const previousRestoration = window.history.scrollRestoration;
@@ -13,7 +13,7 @@ export default function ScrollToTop() {
     const isReload = navigation?.type === 'reload';
 
     if (isReload && pathname === '/' && hash) {
-      window.history.replaceState(null, '', `${pathname}${search}`);
+      window.history.replaceState(null, '', `${pathname}${window.location.search}`);
     }
 
     resetScroll();
@@ -23,7 +23,7 @@ export default function ScrollToTop() {
       window.cancelAnimationFrame(requestAnimationFrameId);
       window.history.scrollRestoration = previousRestoration;
     };
-  }, [pathname, search, hash]);
+  }, [pathname]);
 
   useEffect(() => {
     const currentHash = window.location.hash;
@@ -35,7 +35,7 @@ export default function ScrollToTop() {
     }
 
     window.scrollTo(0, 0);
-  }, [pathname, search, hash]);
+  }, [pathname, hash]);
 
   return null;
 }

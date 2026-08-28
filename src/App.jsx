@@ -4,8 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import CartDrawer from './components/CartDrawer';
-import SearchOverlay from './components/SearchOverlay';
 import MobileMenu from './components/MobileMenu';
 import ScrollToTop from './components/ScrollToTop';
 import { WaveTransition } from './components/Dividers';
@@ -14,16 +12,13 @@ import { WaveTransition } from './components/Dividers';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import About from './pages/About';
-import Account from './pages/Account';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
 import Checkout from './pages/Checkout';
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const location = useLocation();
 
@@ -32,42 +27,27 @@ function App() {
       <ScrollToTop />
       <Navbar
         onMenuClick={() => setIsMobileMenuOpen(true)}
-        onSearchClick={() => setIsSearchOpen(true)}
-        onAccountClick={() => setIsAccountOpen(true)}
-        onWishlistClick={() => setIsWishlistOpen(true)}
       />
 
       <main className="flex-grow pt-20">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<SinglePageStorefront />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<Navigate to="/#home" replace />} />
           </Routes>
         </AnimatePresence>
       </main>
 
       <Footer
-        onAccountClick={() => setIsAccountOpen(true)}
-        onWishlistClick={() => setIsWishlistOpen(true)}
-        onCheckoutClick={() => setIsCheckoutOpen(true)}
       />
-      <CartDrawer onCheckoutClick={() => setIsCheckoutOpen(true)} />
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        onAccountClick={() => setIsAccountOpen(true)}
-        onWishlistClick={() => setIsWishlistOpen(true)}
       />
-      <PageOverlay isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} title="Account">
-        <Account />
-      </PageOverlay>
-      <PageOverlay isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} title="Wishlist">
-        <Wishlist />
-      </PageOverlay>
-      <PageOverlay isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} title="Checkout">
-        <Checkout />
-      </PageOverlay>
     </div>
   );
 }

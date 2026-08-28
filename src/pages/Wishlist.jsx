@@ -70,7 +70,7 @@ const Wishlist = () => {
                                     </div>
                                 </div>
 
-                                <Link to="/#shop" className="p-6 flex-grow flex flex-col justify-between">
+                                <Link to={`/product/${item.id}`} className="p-6 flex-grow flex flex-col justify-between">
                                     <div>
                                         <p className="text-xs uppercase tracking-widest text-brand-brown/50 mb-2">{item.category}</p>
                                         <h3 className="font-serif text-xl text-brand-dark mb-2 group-hover:text-brand-brown transition-colors">{item.name}</h3>

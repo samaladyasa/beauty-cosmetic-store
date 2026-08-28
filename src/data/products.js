@@ -1,4 +1,46 @@
-import { getReliableImage } from '../utils/images';
+import velvetSkinFoundationImage from '../assets/products/velvetskinfoundation.png';
+import dewGlowSerumImage from '../assets/products/dewglowserum.png';
+import cloudKissLipTintImage from '../assets/products/cloudkissliptint.png';
+import silkTouchBlushImage from '../assets/products/silktouchblush.png';
+import radianceVitaminCSerumImage from '../assets/products/radiancevitaminCserum.png';
+import glowRitualBodyOilImage from '../assets/products/glowritualbodyoil.png';
+import luminousPrimerImage from '../assets/products/luminous primer.png';
+import rosewaterTonerImage from '../assets/products/rosewatertoner.png';
+import hydratingBodyWashImage from '../assets/products/hydratingbodywash.png';
+import luxeMattePaletteImage from '../assets/products/luxemattepalette.png';
+import peptideEyeButterImage from '../assets/products/peptideeyebutter.png';
+import berrystainLipBalmImage from '../assets/products/berrystainlipbalm.png';
+import precisionLiquidLinerImage from '../assets/products/precisionliquidliner.png';
+import clarifyingBhaLiquidImage from '../assets/products/clarifyingbhaliquid.png';
+import sheaButterBodyLotionImage from '../assets/products/sheabutterbodylotion.png';
+import overnightLipMaskImage from '../assets/products/overnightlipmask.png';
+import silkRepairHairOilImage from '../assets/products/silkrepairhairoil.png';
+import cloudSoftShampooImage from '../assets/products/cloudsoftshampoo.png';
+import skinScentEauDePerfumeImage from '../assets/products/skinscenteaudeperfume.png';
+import neroliVeilHairMistImage from '../assets/products/neroliveilhairmist.png';
+
+const uploadedProductImages = {
+    1: velvetSkinFoundationImage,
+    2: dewGlowSerumImage,
+    3: cloudKissLipTintImage,
+    4: silkTouchBlushImage,
+    5: radianceVitaminCSerumImage,
+    8: glowRitualBodyOilImage,
+    9: luminousPrimerImage,
+    10: rosewaterTonerImage,
+    11: hydratingBodyWashImage,
+    13: luxeMattePaletteImage,
+    14: peptideEyeButterImage,
+    16: berrystainLipBalmImage,
+    17: precisionLiquidLinerImage,
+    18: clarifyingBhaLiquidImage,
+    19: sheaButterBodyLotionImage,
+    20: overnightLipMaskImage,
+    21: silkRepairHairOilImage,
+    22: cloudSoftShampooImage,
+    23: skinScentEauDePerfumeImage,
+    24: neroliVeilHairMistImage
+};
 
 const catalog = [
     {
@@ -11,7 +53,7 @@ const catalog = [
         reviews: 124,
         description: "A lightweight, buildable foundation that blurs imperfections and leaves a natural, radiant finish. Infused with hyaluronic acid for all-day hydration.",
         images: [
-            "https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=600&auto=format&fit=crop",
+            "https://www.beautyandesign.it/wp-content/uploads/2025/11/skin-velvet-110-fair-vip-make-up.jpg",
             "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop"
         ],
         colors: ["Porcelain", "Ivory", "Beige", "Almond", "Honey", "Mocha"],
@@ -413,7 +455,7 @@ const catalog = [
 
 export const products = catalog.map(product => ({
     ...product,
-    images: product.images.map((_, imageIndex) => getReliableImage((product.id - 1) * 2 + imageIndex)),
+    images: uploadedProductImages[product.id] ? [uploadedProductImages[product.id]] : [product.images[0]],
     price: Math.round(product.price * 10),
     originalPrice: product.originalPrice ? Math.round(product.originalPrice * 10) : null
 }));

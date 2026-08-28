@@ -29,39 +29,30 @@ const Shop = () => {
         }, { replace: true });
     };
 
-    const searchQuery = searchParams.get('q');
+    const majorProducts = products.filter(product => product.bestseller || product.newArrival);
     const collectionProducts = collectionParam === 'new'
         ? products.filter(product => product.newArrival)
         : collectionParam === 'bestsellers'
             ? products.filter(product => product.bestseller)
-            : products;
+            : majorProducts;
 
-    const filteredProducts = collectionProducts.filter(product => {
-        if (filter !== 'All' && product.category !== filter) return false;
-
-        if (searchQuery) {
-            const lowerQuery = searchQuery.toLowerCase();
-            return product.name.toLowerCase().includes(lowerQuery) || product.category.toLowerCase().includes(lowerQuery);
-        }
-
-        return true;
-    });
+    const filteredProducts = collectionProducts.filter(product => filter === 'All' || product.category === filter);
 
     return (
-        <div className="w-full min-h-screen pt-24 pb-32 max-w-7xl mx-auto px-4 md:px-8">
-            <h1 className="font-serif text-5xl md:text-6xl mb-16 text-center w-full flex items-center justify-center">
-                {filter === 'All' ? 'Shop All' : filter}
+        <div className="shop-page w-full min-h-screen pt-24 pb-32 max-w-7xl mx-auto px-4 md:px-8">
+            <h1 className="shop-title font-serif text-5xl md:text-6xl mb-16 text-center w-full flex items-center justify-center">
+                {filter === 'All' ? 'Featured Beauty Edit' : filter}
             </h1>
 
-            <div className="mb-16 py-5 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-                <span className="text-xs uppercase tracking-[0.2em] text-brand-brown/60">Filter collection</span>
+            <div className="shop-filter mb-16 py-5 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+                <span className="text-xs uppercase tracking-[0.2em] text-brand-brown/60">Filter featured products</span>
                 <div className="flex flex-wrap justify-center sm:justify-end gap-2" role="group" aria-label="Filter products by category">
                 {categories.map(category => (
                     <button
                         key={category}
                         onClick={() => handleFilterChange(category)}
                         aria-pressed={filter === category}
-                        className={`px-4 py-2 rounded-sm uppercase tracking-widest text-[10px] transition-colors ${filter === category ? 'bg-brand-brown text-brand-ivory font-semibold' : 'border border-brand-brown/15 text-brand-brown/65 hover:border-brand-brown/40 hover:text-brand-brown'}`}
+                        className={`px-6 py-3 rounded-full uppercase tracking-widest text-xs transition-all duration-300 ${filter === category ? 'bg-brand-brown text-brand-ivory font-semibold shadow-xl' : 'bg-white/40 backdrop-blur-sm border border-brand-brown/10 text-brand-brown/70 hover:bg-white/80 hover:shadow-md'}`}
                     >
                         {category}
                     </button>
@@ -70,14 +61,14 @@ const Shop = () => {
             </div>
 
             <motion.div
-                key={`${filter}-${searchQuery || ''}`}
+                key={filter}
                 initial="hidden"
                 animate="visible"
                 variants={{
                     visible: { transition: { staggerChildren: 0.1 } },
                     hidden: {}
                 }}
-                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-12 w-full"
+                className="shop-grid grid grid-cols-2 md:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-12 w-full"
             >
                 {filteredProducts.map(product => (
                     <motion.div

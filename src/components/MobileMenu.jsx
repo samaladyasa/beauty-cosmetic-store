@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const MobileMenu = ({ isOpen, onClose, onAccountClick, onWishlistClick }) => {
+const MobileMenu = ({ isOpen, onClose }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -19,8 +19,6 @@ const MobileMenu = ({ isOpen, onClose, onAccountClick, onWishlistClick }) => {
         { name: 'Shop All', path: '/#shop' },
         { name: 'About', path: '/#about' },
         { name: 'Categories', path: '/#categories' },
-        { name: 'Wishlist', action: onWishlistClick },
-        { name: 'Account', action: onAccountClick }
     ];
 
     return (
@@ -34,7 +32,7 @@ const MobileMenu = ({ isOpen, onClose, onAccountClick, onWishlistClick }) => {
                     className="fixed inset-0 z-50 bg-brand-nude flex flex-col p-6 md:hidden"
                 >
                     <div className="flex justify-between items-center mb-16">
-                        <span className="font-serif text-2xl tracking-widest uppercase">Auréa</span>
+                        <span className="font-serif text-2xl tracking-widest uppercase">Aabha</span>
                         <button onClick={onClose} className="p-2 -mr-2 text-brand-brown">
                             <X size={24} />
                         </button>
@@ -66,13 +64,6 @@ const MobileMenu = ({ isOpen, onClose, onAccountClick, onWishlistClick }) => {
                     </div>
 
                     <div className="pb-8 flex flex-col space-y-4">
-                        <Link
-                            to="/#account"
-                            onClick={(event) => { event.preventDefault(); onAccountClick(); onClose(); }}
-                            className="text-sm border-t border-brand-brown/20 pt-4 flex w-full hover:text-amber-800 transition-colors"
-                        >
-                            Sign In / Register
-                        </Link>
                         <p className="text-xs text-brand-brown/60 flex">English (USD)</p>
                     </div>
                 </motion.div>

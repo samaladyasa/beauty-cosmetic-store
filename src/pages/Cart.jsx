@@ -112,7 +112,7 @@ const Cart = () => {
                                     </div>
                                 </div>
 
-                                <Link to="/#shop" className="w-full py-4 bg-brand-dark text-white uppercase tracking-widest text-sm hover:bg-brand-brown transition-colors duration-300 text-center block">
+                                <Link to="/checkout" className="w-full py-4 bg-brand-dark text-white uppercase tracking-widest text-sm hover:bg-brand-brown transition-colors duration-300 text-center block">
                                     Proceed to Checkout
                                 </Link>
 

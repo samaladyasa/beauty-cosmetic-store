@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
-import { useCart } from '../context/CartContext';
-import { useWishlist } from '../context/WishlistContext';
-import { Heart, Minus, Plus, ChevronDown, Sparkles } from 'lucide-react';
-import { ShadeSelector, AddToBagButton } from '../components/ProductInteractions';
+import { ChevronDown, Sparkles } from 'lucide-react';
+import { ShadeSelector } from '../components/ProductInteractions';
 import FindMyShade from '../components/FindMyShade';
 import { formatPrice } from '../utils/currency';
 import { getShadeTint, handleImageError } from '../utils/images';
@@ -13,10 +11,6 @@ import { getShadeTint, handleImageError } from '../utils/images';
 const ProductDetails = () => {
     const { id } = useParams();
     const product = products.find(p => p.id === parseInt(id));
-    const { addToCart } = useCart();
-    const { toggleWishlist, isInWishlist } = useWishlist();
-
-    const [quantity, setQuantity] = useState(1);
     const [selectedColor, setSelectedColor] = useState(product?.colors?.[0] || null);
     const [activeImage, setActiveImage] = useState(0);
     const [isFindShadeOpen, setIsFindShadeOpen] = useState(false);
@@ -30,8 +24,6 @@ const ProductDetails = () => {
     };
 
     if (!product) return <div className="pt-32 text-center h-[50vh] w-full flex justify-center items-center">Product not found</div>;
-
-    const inWishlist = isInWishlist(product.id);
 
     return (
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-12 pb-32">
@@ -93,7 +85,7 @@ const ProductDetails = () => {
                         <span className="text-brand-brown/60 underline">{product.reviews} Reviews</span>
                     </div>
 
-                    <p className="text-xl mb-8 flex w-full">{formatPrice(product.price)}</p>
+                    <p className="text-2xl mb-8 flex w-full">{formatPrice(product.price)}</p>
 
                     <p className="leading-relaxed mb-10 text-brand-brown/80 flex w-full text-left">{product.description}</p>
 
@@ -117,30 +109,6 @@ const ProductDetails = () => {
                             />
                         </div>
                     )}
-
-                    <div className="flex flex-col gap-4 mb-12 w-full">
-                        <div className="flex items-center gap-4 h-14 w-full">
-                            <div className="border border-brand-brown/30 h-full flex items-center justify-between px-4 w-32 rounded-sm text-sm shrink-0">
-                                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 hover:text-amber-800 transition-colors"><Minus size={16} /></button>
-                                <span>{quantity}</span>
-                                <button onClick={() => setQuantity(quantity + 1)} className="p-2 hover:text-amber-800 transition-colors"><Plus size={16} /></button>
-                            </div>
-                            <AddToBagButton
-                                product={product}
-                                quantity={quantity}
-                                selectedColor={selectedColor}
-                                addToCart={addToCart}
-                                className="flex-1 bg-brand-brown text-brand-ivory h-full uppercase tracking-widest text-sm hover:opacity-90 transition-colors rounded-sm"
-                            />
-                            <button onClick={() => toggleWishlist(product)} className="border border-brand-brown/30 h-full px-4 rounded-sm hover:bg-brand-brown/5 transition-colors group shrink-0 flex items-center justify-center">
-                                <Heart size={20} className={`transition-colors ${inWishlist ? 'fill-brand-brown text-brand-brown' : 'text-brand-brown/70 group-hover:text-brand-brown'}`} />
-                            </button>
-                        </div>
-
-                        <button className="w-full bg-[#5a31f4] text-white h-14 uppercase tracking-widest text-sm hover:bg-[#4825ca] transition-colors rounded-sm flex items-center justify-center">
-                            Buy with Shop Pay
-                        </button>
-                    </div>
 
                     <div className="border-t border-brand-brown/10 pt-8 space-y-4 w-full flex flex-col">
                         {['Ingredients', 'How To Use', 'Shipping & Returns'].map((acc) => (

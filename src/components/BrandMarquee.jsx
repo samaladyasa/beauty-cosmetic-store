@@ -7,7 +7,7 @@ const BrandMarquee = () => {
     ];
 
     return (
-        <div className="w-full bg-brand-brown text-brand-ivory py-4 overflow-hidden flex relative items-center justify-center">
+        <div className="brand-marquee w-full bg-brand-brown text-brand-ivory py-4 overflow-hidden flex relative items-center justify-center">
             <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-brand-brown to-transparent z-10" />
             <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-brand-brown to-transparent z-10" />
 
