@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import QuickView from './QuickView';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { formatPrice } from '../utils/currency';
 import { handleImageError } from '../utils/images';
 

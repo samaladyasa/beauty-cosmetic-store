@@ -1,32 +1,56 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import BrandMarquee from '../components/BrandMarquee';
 import PromoSection from '../components/PromoSection';
+import ProductCard from '../components/ProductCard';
 import TestimonialsSection from '../components/TestimonialsSection';
 import FAQSection from '../components/FAQSection';
 import QuoteSection from '../components/QuoteSection';
 import ContactSection from '../components/ContactSection';
+import About from './About';
+import InfiniteSpiral from '../components/InfiniteSpiral';
 import { WaveTransition } from '../components/Dividers';
 import { products } from '../data/products';
 import { formatPrice } from '../utils/currency';
-import { getReliableImage, handleImageError } from '../utils/images';
+import { handleImageError } from '../utils/images';
 import desktopHeroImage from '../assets/hpdesktop.png';
 import mobileHeroImage from '../assets/hpmobile.png';
-import skincareCategoryImage from '../assets/skincaresec.png';
-import makeupCategoryImage from '../assets/makeupsec.png';
-import bodyCategoryImage from '../assets/bodysec.png';
-import lipCategoryImage from '../assets/lipsec.png';
-import haircareCategoryImage from '../assets/haircaresec.png';
-import fragranceCategoryImage from '../assets/fragnancesec.png';
-import newArrivalsCategoryImage from '../assets/newarrivalssec.png';
-import bestsellersCategoryImage from '../assets/bestsellerssec.png';
 import dewGlowSerumImage from '../assets/products/dewglowserum.png';
+import hyaluronicAcidImage from '../assets/hyluronicacid.png';
+import vitaminCImage from '../assets/vitaminC.png';
+import niacinamideImage from '../assets/niacinamide.png';
+import peptidesImage from '../assets/peptides.png';
+import squalaneImage from '../assets/squalane.png';
+import retinolImage from '../assets/retinol.png';
+import radianceVitaminCSerumImage from '../assets/products/radiancevitaminCserum.png';
+import luxeMattePaletteImage from '../assets/products/luxemattepalette.png';
+import glowRitualBodyOilImage from '../assets/products/glowritualbodyoil.png';
+import cloudKissLipTintImage from '../assets/products/cloudkissliptint.png';
+import silkRepairHairOilImage from '../assets/products/silkrepairhairoil.png';
+import skinScentEauDePerfumeImage from '../assets/products/skinscenteaudeperfume.png';
+import velvetSkinFoundationImage from '../assets/products/velvetskinfoundation.png';
 
 const Home = () => {
     const { scrollY } = useScroll();
     const heroY = useTransform(scrollY, [0, 1000], [0, 250]);
+    const navigate = useNavigate();
+    const [activeShopCategory, setActiveShopCategory] = useState('All');
+    const shopCategories = ['All', 'Makeup', 'Skincare', 'Haircare', 'Body Care', 'Lip Care', 'Fragrance'];
+    const featuredProducts = products.filter(product => product.bestseller || product.newArrival);
+
+    const visibleShopProducts = activeShopCategory === 'All'
+        ? featuredProducts
+        : featuredProducts.filter(product => product.category === activeShopCategory);
+
+    const goToShop = (event, destination = '/#shop') => {
+        event.preventDefault();
+        navigate(destination);
+        window.setTimeout(() => {
+            document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 0);
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -80,12 +104,12 @@ const Home = () => {
                             <span className="script-type block text-6xl md:text-8xl">Natural Radiance.</span>
                         </motion.h1>
 
-                        <motion.p variants={childVariants} className="text-lg md:text-xl text-brand-brown/80 mb-10 max-w-md font-light leading-relaxed">
+                        <motion.p variants={childVariants} className="text-lg md:text-xl text-white mb-10 max-w-md font-medium leading-relaxed drop-shadow-[0_1px_10px_rgba(0,0,0,0.45)] bg-black/40 px-4 py-3 rounded-md">
                             Discover a curated collection of luxurious cosmetics and skincare designed to enhance your authentic beauty and empower your everyday flow.
                         </motion.p>
 
                         <motion.div variants={childVariants} className="flex flex-col sm:flex-row gap-4">
-                            <a href="#shop" className="bg-brand-brown text-brand-ivory px-8 py-4 text-xs tracking-[0.15em] uppercase text-center hover:bg-black transition-colors group flex items-center justify-center gap-3">
+                            <a href="#shop" className="bg-brand-brown text-brand-ivory px-8 py-4 rounded-full text-xs tracking-[0.15em] uppercase text-center hover:bg-black transition-colors group flex items-center justify-center gap-3">
                                 Shop Collection
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </a>
@@ -96,27 +120,30 @@ const Home = () => {
 
             <WaveTransition topBg="bg-[#f3f0ec]" bottomFill="text-[#f3f0ec]" className="hero-divider" />
 
+            <section id="about" className="bg-[#f3f0ec]"><About /></section>
+
+            <BrandMarquee />
+
             <section id="categories" className="category-type category-section pb-8 md:pb-12 bg-[#f3f0ec] w-full">
                 <div className="max-w-7xl mx-auto px-4 md:px-8">
                     <div className="flex items-end justify-between mb-10 border-b border-brand-brown/15 pb-6">
                         <div>
-                            <span className="text-xs uppercase tracking-[0.25em] text-brand-brown/55">Start with a ritual</span>
                             <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mt-3">Shop by category</h2>
                         </div>
-                        <Link to="/#shop" className="hidden md:flex items-center gap-2 text-xs uppercase tracking-[0.2em] border-b border-brand-brown/40 pb-2">View all <ArrowRight size={14} /></Link>
+                        <a href="/#shop" onClick={(event) => goToShop(event)} className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] border-b border-brand-brown/40 pb-2">View all <ArrowRight size={14} /></a>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                         {[
-                            ['Skincare', skincareCategoryImage],
-                            ['Makeup', makeupCategoryImage],
-                            ['Body Care', bodyCategoryImage],
-                            ['Lip Care', lipCategoryImage],
-                            ['Haircare', haircareCategoryImage],
-                            ['Fragrance', fragranceCategoryImage],
-                            ['New Arrivals', newArrivalsCategoryImage],
-                            ['Best Sellers', bestsellersCategoryImage]
+                            ['Skincare', radianceVitaminCSerumImage],
+                            ['Makeup', luxeMattePaletteImage],
+                            ['Body Care', glowRitualBodyOilImage],
+                            ['Lip Care', cloudKissLipTintImage],
+                            ['Haircare', silkRepairHairOilImage],
+                            ['Fragrance', skinScentEauDePerfumeImage],
+                            ['New Arrivals', dewGlowSerumImage],
+                            ['Best Sellers', velvetSkinFoundationImage]
                         ].map(([name, image], index) => (
-                            <Link key={name} to={name === 'New Arrivals' ? '/?collection=new#shop' : name === 'Best Sellers' ? '/?collection=bestsellers#shop' : `/?category=${name.toLowerCase().replace(' ', '-')}#shop`} className={`group relative aspect-[4/5] overflow-hidden bg-brand-champagne luxury-shadow rounded-2xl border border-white/30 ${index % 4 === 1 ? 'md:translate-y-6' : index % 4 === 3 ? 'md:-translate-y-4' : ''}`}>
+                            <Link key={name} onClick={(event) => goToShop(event, name === 'New Arrivals' ? '/?collection=new#shop' : name === 'Best Sellers' ? '/?collection=bestsellers#shop' : `/?category=${name.toLowerCase().replace(' ', '-')}#shop`)} to={name === 'New Arrivals' ? '/?collection=new#shop' : name === 'Best Sellers' ? '/?collection=bestsellers#shop' : `/?category=${name.toLowerCase().replace(' ', '-')}#shop`} className={`group relative aspect-[4/5] overflow-hidden bg-brand-champagne luxury-shadow rounded-2xl border border-white/30 ${index % 4 === 1 ? 'md:translate-y-6' : index % 4 === 3 ? 'md:-translate-y-4' : ''}`}>
                                 <img src={image} onError={handleImageError} alt={name} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" loading="lazy" />
                                 <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-16"><span className="text-brand-ivory text-xl font-serif">{name}</span></div>
                             </Link>
@@ -125,52 +152,120 @@ const Home = () => {
                 </div>
             </section>
 
-            <WaveTransition topBg="bg-[#f3f0ec]" bottomFill="text-brand-brown" />
+            <WaveTransition topBg="bg-[#f3f0ec]" bottomFill="text-brand-champagne" className="category-products-divider" shape="mountain" />
 
-            <BrandMarquee />
-
-            <WaveTransition topBg="bg-brand-brown" bottomFill="text-brand-ivory" />
-
-            <section className="ritual-section ritual-type py-6 md:py-10 bg-brand-ivory w-full">
+            <section id="shop" className="shop-section w-full bg-[#f7f1f1] py-16 md:py-20">
                 <div className="max-w-7xl mx-auto px-4 md:px-8">
-                    <div className="text-center mb-6 md:mb-8">
-                        <span className="text-xs uppercase tracking-[0.25em] text-brand-brown/50">The Aabha Ritual</span>
-                        <h2 className="font-serif text-3xl md:text-4xl text-brand-dark mt-3">A Symphonic Approach to Beauty</h2>
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 border-b border-brand-brown/15 pb-6">
+                        <div>
+                            <span className="text-xs uppercase tracking-[0.25em] text-brand-brown/55">Featured collection</span>
+                            <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mt-3">Featured Beauty Edit</h2>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2 md:justify-end">
+                            {shopCategories.map(category => (
+                                <button
+                                    key={category}
+                                    type="button"
+                                    onClick={() => setActiveShopCategory(category)}
+                                    className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] transition-all duration-300 ${
+                                        activeShopCategory === category
+                                            ? 'bg-brand-brown text-brand-ivory shadow-lg'
+                                            : 'bg-white/40 border border-brand-brown/10 text-brand-brown/75 hover:bg-white'
+                                    }`}
+                                >
+                                    {category}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 md:gap-0 md:divide-x divide-brand-brown/10 text-center">
-                        {[
-                            { step: 'MAKEUP', desc: "Artistry in every shade" },
-                            { step: 'SKINCARE', desc: "Nourishment from within" },
-                            { step: 'BODY CARE', desc: "Luxurious full-body care" },
-                            { step: 'HAIRCARE', desc: "Revitalize your crowning glory" },
-                            { step: 'FRAGRANCE', desc: "Captivating timeless auroras" }
-                        ].map((item, index) => (
-                            <div key={item.step} className="ritual-item flex flex-col items-center py-6 md:py-4 px-4">
-                                <span className="text-xl md:text-2xl text-brand-brown/20 font-serif italic mb-4">0{index + 1}</span>
-                                <h3 className="text-sm md:text-[13px] tracking-[0.3em] font-medium text-brand-dark uppercase mb-3">{item.step}</h3>
-                                <p className="text-xs text-brand-brown/60 font-light max-w-[150px] leading-relaxed">{item.desc}</p>
-                            </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-10">
+                        {visibleShopProducts.map(product => (
+                            <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
                 </div>
             </section>
 
-            <WaveTransition topBg="bg-brand-ivory" bottomFill="text-[#f7f1f1]" />
+            <WaveTransition topBg="bg-[#f7f1f1]" bottomFill="text-[#eadbd1]" className="products-promo-divider" shape="mountain" />
 
             <PromoSection />
 
-            <WaveTransition topBg="bg-[#f7f1f1]" bottomFill="text-brand-ivory" />
+            <WaveTransition topBg="bg-[#f7f1f1]" bottomFill="text-brand-champagne" className="promo-ingredient-divider" />
 
-            <section className="ingredient-section ingredient-type py-8 md:py-12 w-full bg-brand-ivory">
-                <div className="max-w-7xl mx-auto px-4 md:px-8">
-                    <div className="ingredient-heading mb-6"><span className="text-xs uppercase tracking-[0.25em] text-brand-brown/55">The formula behind the glow</span><h2 className="font-serif text-4xl md:text-5xl text-brand-dark mt-3">Purified ingredients. Elevated results.</h2></div>
-                    <div className="ingredient-grid grid grid-cols-2 md:grid-cols-4">
-                        {[['Hyaluronic Acid', 'Deep hydration'], ['Vitamin C', 'Visible brightness'], ['Niacinamide', 'A calm barrier'], ['Peptides', 'Renewed firmness']].map(([name, benefit], index) => (
-                            <div key={name} className="ingredient-item p-4 md:p-6 border-r border-brand-brown/10 last:border-r-0"><span className="font-serif italic text-3xl text-brand-champagne">0{index + 1}</span><h3 className="font-serif text-xl mt-4 mb-2 text-brand-dark">{name}</h3><p className="text-sm text-brand-brown/60">{benefit}</p></div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+<section className="ingredient-section ingredient-type relative w-full bg-brand-ivory overflow-hidden">
+    <div className="max-w-6xl mx-auto px-5 md:px-10 py-10 md:py-14">
+
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-6 md:mb-8"
+        >
+            <span className="text-[9px] uppercase tracking-[0.4em] text-brand-brown/45">
+                Inside the formula
+            </span>
+
+            <h2 className="font-serif text-3xl md:text-5xl text-brand-dark mt-3">
+                Simple ingredients.
+                <span className="italic text-brand-brown/60"> Thoughtfully chosen.</span>
+            </h2>
+        </motion.div>
+
+
+        <div className="relative mx-auto max-w-6xl h-[600px] md:h-[700px]">
+            <InfiniteSpiral
+                items={[
+                  {
+                    src: hyaluronicAcidImage,
+                    alt: 'Hyaluronic Acid - Deep Hydration',
+                    label: 'Hyaluronic Acid'
+                  },
+                  {
+                    src: vitaminCImage,
+                    alt: 'Vitamin C - Visible Brightness',
+                    label: 'Vitamin C'
+                  },
+                  {
+                    src: niacinamideImage,
+                    alt: 'Niacinamide - Calm Barrier',
+                    label: 'Niacinamide'
+                  },
+                  {
+                    src: peptidesImage,
+                    alt: 'Peptides - Renewed Firmness',
+                    label: 'Peptides'
+                  },
+                  {
+                    src: squalaneImage,
+                    alt: 'Squalane - Oil Balance',
+                    label: 'Squalane'
+                  },
+                  {
+                    src: retinolImage,
+                    alt: 'Retinol - Renewable Power',
+                    label: 'Retinol'
+                  }
+                ]}
+                animationMode="all"
+                speed={0.35}
+                radius={200}
+                cardWidth={160}
+                cardHeight={220}
+                verticalSpacing={70}
+                perspective={1200}
+                cardsPerTurn={6}
+                cardRadius={12}
+                centerScale={1.35}
+                edgeBlur={5}
+                pauseOnHover={true}
+            />
+        </div>
+
+    </div>
+</section>
 
             <WaveTransition topBg="bg-brand-ivory" bottomFill="text-brand-brown" />
 
@@ -181,23 +276,21 @@ const Home = () => {
                 </div>
             </section>
 
-            <WaveTransition topBg="bg-brand-brown" bottomFill="text-[#f7f1f1]" />
+            <WaveTransition topBg="bg-brand-brown" bottomFill="text-brand-ivory" />
 
             <TestimonialsSection />
 
-            <WaveTransition topBg="bg-[#f7f1f1]" bottomFill="text-brand-brown" />
+            <WaveTransition topBg="bg-[#f7f1f1]" bottomFill="text-brand-brown" className="spotlight-divider" />
 
             <QuoteSection />
 
-            <WaveTransition topBg="bg-brand-brown" bottomFill="text-brand-ivory" />
+            <WaveTransition topBg="bg-brand-brown" bottomFill="text-[#f9f5f1]" className="spotlight-divider" />
 
             <FAQSection />
 
             <WaveTransition topBg="bg-brand-ivory" bottomFill="text-[#f3f0ec]" />
 
             <ContactSection />
-
-            <WaveTransition topBg="bg-[#f3f0ec]" bottomFill="text-brand-ivory" />
 
         </div>
     );

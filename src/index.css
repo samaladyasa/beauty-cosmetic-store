@@ -115,7 +115,6 @@
     box-shadow: 0 24px 70px rgba(77, 41, 34, 0.15), 0 4px 12px rgba(77, 41, 34, 0.08);
   }
 
-  /* Font size overrides for a premium feel */
   .text-\[9px\] {
     font-size: 0.9375rem !important;
     line-height: 1.5 !important;
@@ -137,18 +136,17 @@
     --section-line: rgba(77, 41, 34, 0.13);
   }
 
+  .home-page [class*="text-brand-brown/"] {
+    color: #5b3930 !important;
+  }
+
+  .home-page [class*="text-brand-ivory/"] {
+    color: #fdfbf7 !important;
+  }
+
   .hero-section {
     min-height: 680px;
     isolation: isolate;
-  }
-
-  .hero-section::after {
-    content: '';
-    position: absolute;
-    inset: 8% 4%;
-    z-index: 1;
-    border: 1px solid rgba(255, 250, 244, 0.45);
-    pointer-events: none;
   }
 
   .hero-content {
@@ -198,6 +196,46 @@
 
   .spotlight-section h2 {
     max-width: 520px;
+  }
+
+  .spotlight-divider {
+    height: 32px !important;
+    min-height: 32px !important;
+  }
+
+  .spotlight-divider svg {
+    height: 32px !important;
+    min-height: 32px !important;
+  }
+
+  .promo-ingredient-divider {
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .promo-ingredient-divider svg {
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .products-promo-divider {
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+
+  .products-promo-divider svg {
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+
+  .category-products-divider {
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .category-products-divider svg {
+    height: 40px !important;
+    min-height: 40px !important;
   }
 
   .footer-divider {
@@ -375,7 +413,6 @@
   .testimonial-type h2,
   .testimonial-type blockquote {
     font-family: var(--font-serif);
-    /* Bodoni Moda */
   }
 
   .ingredient-type h2 {
@@ -404,8 +441,7 @@
     overflow: hidden;
   }
 
-  .ritual-section::before,
-  .ingredient-section::before {
+  .ritual-section::before {
     content: '';
     position: absolute;
     inset: 18px 4%;

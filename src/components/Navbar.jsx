@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 
 const Navbar = ({ onMenuClick }) => {
-    const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
-    const isHome = location.pathname === '/';
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const handleSectionNavigation = (event, sectionId) => {
+        event.preventDefault();
+        navigate(`/#${sectionId}`);
+        window.setTimeout(() => {
+            document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 0);
+    };
 
     const navClass = `fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out bg-brand-ivory/95 backdrop-blur-xl py-4 shadow-sm border-b border-brand-brown/10`;
 
@@ -27,22 +26,22 @@ const Navbar = ({ onMenuClick }) => {
                 </div>
 
                 <div className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-wider flex-1 text-brand-brown">
-                    <Link to="/#home" className={`relative group transition-colors ${location.pathname === '/' ? 'text-brand-brown font-semibold' : 'hover:text-amber-900'}`}>
+                    <Link to="/#home" onClick={(event) => handleSectionNavigation(event, 'home')} className={`relative group transition-colors ${location.pathname === '/' ? 'text-brand-brown font-semibold' : 'hover:text-amber-900'}`}>
                         Home
                         <span className={`absolute -bottom-1 left-0 h-[1px] bg-brand-brown transition-all duration-300 ${location.pathname === '/' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
                     </Link>
-                    <Link to="/#shop" className={`relative group transition-colors ${location.pathname === '/shop' ? 'text-brand-brown font-semibold' : 'hover:text-amber-900'}`}>
+                    <Link to="/#shop" onClick={(event) => handleSectionNavigation(event, 'shop')} className={`relative group transition-colors ${location.pathname === '/shop' ? 'text-brand-brown font-semibold' : 'hover:text-amber-900'}`}>
                         Shop
                         <span className={`absolute -bottom-1 left-0 h-[1px] bg-brand-brown transition-all duration-300 ${location.pathname === '/shop' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
                     </Link>
-                    <Link to="/#about" className={`relative group transition-colors ${location.pathname === '/about' ? 'text-brand-brown font-semibold' : 'hover:text-amber-900'}`}>
+                    <Link to="/#about" onClick={(event) => handleSectionNavigation(event, 'about')} className={`relative group transition-colors ${location.pathname === '/about' ? 'text-brand-brown font-semibold' : 'hover:text-amber-900'}`}>
                         About
                         <span className={`absolute -bottom-1 left-0 h-[1px] bg-brand-brown transition-all duration-300 ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
                     </Link>
                 </div>
 
                 <div className="text-center flex-1 flex justify-center min-w-0 px-2">
-                    <Link to="/#home" className="font-['Playfair_Display'] font-semibold text-3xl sm:text-4xl md:text-5xl uppercase tracking-[0.15em] whitespace-nowrap hover:opacity-70 transition-opacity text-brand-dark">
+                    <Link to="/#home" className="font-['Playfair_Display'] font-semibold text-2xl sm:text-4xl md:text-5xl uppercase tracking-[0.12em] sm:tracking-[0.15em] whitespace-nowrap hover:opacity-70 transition-opacity text-brand-dark">
                         Aabha
                     </Link>
                 </div>

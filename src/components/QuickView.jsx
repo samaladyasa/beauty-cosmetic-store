@@ -73,7 +73,7 @@ const QuickView = ({ isOpen, onClose, product }) => {
                         />
                     </div>
 
-                    <div className="w-full md:w-1/2 h-[60%] md:h-full p-8 flex flex-col overflow-y-auto">
+                    <div className="w-full md:w-1/2 h-[60%] md:h-full p-5 md:p-8 flex flex-col overflow-y-auto">
                         <span className="text-xs uppercase tracking-widest text-brand-brown/60 mb-2 block">{product.category}</span>
                         <h2 className="font-serif text-3xl mb-2 text-brand-dark">{product.name}</h2>
                         <div className="flex items-center gap-2 mb-4 text-xs">

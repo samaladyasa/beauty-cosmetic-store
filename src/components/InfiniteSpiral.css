@@ -1,0 +1,129 @@
+.infinite-spiral {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.infinite-spiral__stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.infinite-spiral__item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: var(--infinite-spiral-card-width);
+  height: var(--infinite-spiral-card-height);
+  overflow: visible;
+  border: 1px solid rgb(255 255 255 / 0.24);
+  border-radius: var(--infinite-spiral-card-radius);
+  background: rgb(255 255 255 / 0.08);
+  box-shadow: 0 14px 38px rgb(8 6 18 / 0.2);
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  text-decoration: none;
+}
+
+.infinite-spiral__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  user-select: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.infinite-spiral__label-group {
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 1px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  width: 260px;
+  opacity: var(--spiral-label-progress, 0);
+  transform: translate(calc((1 - var(--spiral-label-progress, 0)) * -8px), -50%);
+  transition: opacity 220ms ease, transform 260ms ease;
+  pointer-events: none;
+}
+
+.infinite-spiral__item:nth-child(even) .infinite-spiral__label-group {
+  right: calc(100% - 1px);
+  left: auto;
+  flex-direction: row-reverse;
+  transform: translate(calc((1 - var(--spiral-label-progress, 0)) * 8px), -50%);
+}
+
+.infinite-spiral__label-path {
+  width: 116px;
+  height: 22px;
+  flex: 0 0 116px;
+  overflow: visible;
+  opacity: 1;
+}
+
+.infinite-spiral__label-path path {
+  fill: none;
+  stroke: #171311;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--spiral-label-progress, 0));
+  transition: stroke-dashoffset 260ms ease, opacity 220ms ease;
+}
+
+.infinite-spiral__label {
+  color: #171311;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  line-height: 1.2;
+  opacity: var(--spiral-label-progress, 0);
+  clip-path: inset(0 calc((1 - var(--spiral-label-progress, 0)) * 100%) 0 0);
+  transform: translateX(0);
+  transition: opacity 220ms ease, clip-path 260ms ease, transform 260ms ease;
+}
+
+.infinite-spiral__item:nth-child(even) .infinite-spiral__label {
+  text-align: right;
+  clip-path: inset(0 0 0 calc((1 - var(--spiral-label-progress, 0)) * 100%));
+}
+
+@media (max-width: 767px) {
+  .infinite-spiral__label-group,
+  .infinite-spiral__item:nth-child(even) .infinite-spiral__label-group {
+    top: calc(100% + 10px);
+    left: 50%;
+    right: auto;
+    width: max-content;
+    flex-direction: row;
+    transform: translate(-50%, 0);
+  }
+
+  .infinite-spiral__label-path {
+    display: none;
+  }
+
+  .infinite-spiral__label,
+  .infinite-spiral__item:nth-child(even) .infinite-spiral__label {
+    text-align: center;
+    clip-path: inset(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .infinite-spiral__item {
+    transition: none;
+  }
+}

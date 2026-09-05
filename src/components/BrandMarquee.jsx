@@ -7,12 +7,13 @@ const BrandMarquee = () => {
     ];
 
     return (
-        <div className="brand-marquee w-full bg-brand-brown text-brand-ivory py-4 overflow-hidden flex relative items-center justify-center">
-            <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-brand-brown to-transparent z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-brand-brown to-transparent z-10" />
+        <div className="brand-marquee w-full h-[76px] md:h-[88px] text-brand-ivory overflow-hidden flex relative items-center justify-center">
+            <svg aria-hidden="true" className="absolute inset-0 w-full h-full fill-brand-brown" viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,5C180,16 300,0 480,7C660,18 760,1 930,9C1110,20 1260,2 1440,8V112C1260,103 1110,120 930,108C760,100 660,119 480,107C300,98 180,119 0,108Z" />
+            </svg>
 
             <motion.div
-                className="flex whitespace-nowrap items-center gap-16 md:gap-32 pr-16 md:pr-32"
+                className="relative z-20 flex whitespace-nowrap items-center gap-16 md:gap-32 pr-16 md:pr-32"
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{
                     repeat: Infinity,

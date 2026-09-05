@@ -5,14 +5,14 @@ import ourStoryImage from '../assets/hpmobile.png';
 
 const About = () => {
     return (
-        <div className="about-page pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen bg-[#f3f0ec]">
+        <div className="about-page pt-12 md:pt-16 pb-8 md:pb-10 px-4 md:px-8 max-w-7xl mx-auto bg-[#f3f0ec]">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="about-intro text-center max-w-3xl mx-auto mb-20"
             >
-                <span className="text-base md:text-lg tracking-[0.2em] font-sans text-brand-brown/60 uppercase mb-4 block">Our Story</span>
+                <span className="text-base md:text-lg tracking-[0.2em] font-sans text-brand-brown/60 uppercase mb-4 block">About Us</span>
                 <h1 className="text-6xl md:text-8xl font-display mb-8 text-brand-dark leading-tight">
                     Illuminating <br className="hidden md:block" /> <span className="font-script italic text-7xl md:text-9xl text-brand-champagne">Authentic</span> Beauty
                 </h1>
@@ -21,7 +21,7 @@ const About = () => {
                 </p>
             </motion.div>
 
-            <div className="about-story grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center mb-24">
+            <div className="about-story grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center mb-8 md:mb-12">
                 <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
